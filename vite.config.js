@@ -40,5 +40,15 @@ export default defineConfig({
                 `,
             }
         }
+    },
+    server: {
+        proxy: {
+            // 接口地址走本地同源，由 dev server 转发，避开浏览器跨域与 http->https 重定向
+            '/api': {
+                target: 'https://pcapi-xiaotuxian-front-devtest.itheima.net',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            }
+        }
     }
 })
